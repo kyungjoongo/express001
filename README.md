@@ -1,9 +1,10 @@
-익스프레스js CRUD 프로젝트 ( with nodejs)
+Expressjs CRUD board project ( with nodejs)
 
 #################################################
 #
+# ultra fast javascript fullstack framework [Express]
 #
-# very fast javascript full stack f.w.
-#
-#
+# rdbms : mysql
+# # ui : bootstrap 3 , handlerbar template
+# persistant layer : mybatisnodejs
 ###################################################
