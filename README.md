@@ -6,5 +6,4 @@ Expressjs CRUD board project ( with nodejs)
 #
 # rdbms : mysql
 # ui : bootstrap 3 , handlebars template
-# persistant layer : mybatisnodejs
 ###################################################
