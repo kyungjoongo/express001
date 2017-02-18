@@ -7,6 +7,15 @@
             location.href = "/person/insertForm";
         });
 
+        /*//btnWriteMode
+        $("#btnWriteMode").on('click', function (e) {
+            $("#name").focus();
+        });*/
+
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#name').focus();
+        })
+
         //btnSubmit
         $('body').on('click', '#btnSubmit', function (e) {
             e.preventDefault();
@@ -59,7 +68,7 @@
 
         {{/each}}
     </table>
-    <button type="button" data-toggle="modal" data-target="#myModal">글쓰기</button>
+    <button type="button" id="btnWriteMode" data-toggle="modal" data-target="#myModal">글쓰기</button>
 </div>
 
 
@@ -80,14 +89,6 @@
                 <div class="modal-body">
                     <form action="/person/insert" method="post" id="form1">
                     <table border="1" style="width: 570px" class="table">
-                        <tr>
-                            <td style="background-color: antiquewhite ">id</td>
-                            <td>
-                                <input type="text" id="id" name="id">
-                            </td>
-
-                        </tr>
-
                         <tr>
                             <td style="background-color: antiquewhite ">author</td>
                             <td>
