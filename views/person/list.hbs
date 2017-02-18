@@ -7,10 +7,35 @@
             location.href = "/person/insertForm";
         });
 
-        /*//btnWriteMode
-        $("#btnWriteMode").on('click', function (e) {
-            $("#name").focus();
-        });*/
+        //modifyPopup
+        $(".modify").on('click', function (e) {
+            $('#myModal').modal('show');
+            var id = $(this).attr("idValue");
+
+            $("#insertYn").val("N");
+
+            $.ajax({
+                url:'/person/getOne',
+                dataType:'json',
+                type : 'POST',
+                data : {
+                    id : id
+                },
+                success:function(data){
+
+                    //alert(data.person.name);
+                    $("#name").val( data.person.name);
+                    $("#contents").val( data.person.contents);
+                    $("#id").val( data.person.id);
+                },
+                error:function(data){
+                    alert("error");
+                }
+            });
+
+
+
+        });
 
         $('#myModal').on('shown.bs.modal', function () {
             $('#name').focus();
@@ -19,11 +44,25 @@
         //btnSubmit
         $('body').on('click', '#btnSubmit', function (e) {
             e.preventDefault();
-            $.post('/person/insert',
-               $('#form1').serialize(),
-               function(data, status, xhr){
-                 location.href='./list';
-               });
+
+            if ( $("#insertYn").val() =='Y'){
+                $.post('/person/insert',
+                        $('#form1').serialize(),
+                        function (data, status, xhr) {
+                            location.href = './list';
+                        });
+
+            //수정 모드인 경우
+            }else{
+                $.post('/person/updatePerson',
+                        $('#form1').serialize(),
+                        function (data, status, xhr) {
+                            location.href = './list';
+                        });
+
+            }
+
+
         });
 
 
@@ -51,7 +90,7 @@
 </style>
 <div class="container">
 
-
+<input type="text" id="insertYn" >
     <table id="mytable" border="1" style="width: 800px" class="table ">
         <tr>
             <th style="background-color: #e3e3e3;width: 50px;">id</th>
@@ -62,13 +101,15 @@
         {{#each persons}}
             <tr>
                 <td> {{id}} </td>
-                <td><a href="/person/detailForm?id={{id}}"> {{contents}} </a></td>
+                <!--<td><a href="/person/detailForm?id={{id}}"> {{contents}} </a></td>-->
+                <td><a class="modify" idValue="{{id}}"> {{contents}} </a></td>
                 <td> {{name}} </td>
             </tr>
 
         {{/each}}
     </table>
     <button type="button" id="btnWriteMode" data-toggle="modal" data-target="#myModal">글쓰기</button>
+
 </div>
 
 
@@ -85,9 +126,10 @@
                 <h4 class="modal-title">글등록</h4>
             </div>
 
-                <!--모달 컨텐츠-->
-                <div class="modal-body">
-                    <form action="/person/insert" method="post" id="form1">
+            <!--모달 컨텐츠-->
+            <div class="modal-body">
+                <form action="/person/insert" method="post" id="form1">
+                    <input type="text" id="id" name="id">
                     <table border="1" style="width: 570px" class="table">
                         <tr>
                             <td style="background-color: antiquewhite ">author</td>
@@ -107,24 +149,23 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                               <!-- <input type="submit" value="저장"/>-->
+                                <!-- <input type="submit" value="저장"/>-->
 
                             </td>
 
                         </tr>
                     </table>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btnSubmit" class="btn btn-default" data-dismiss="modal">Submit</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSubmit" class="btn btn-default" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
 
         </div>
 
     </div>
 </div>
-
 
 
 </div>

@@ -35,7 +35,7 @@ function getMaxValue(callback) {
 }
 
 
-exports.getPersonList = function(req, res) {
+exports.getPersonList = function (req, res) {
     connection.query('SELECT * from Persons', function (err, rows) {
         if (err) throw err;
 
@@ -47,36 +47,35 @@ exports.getPersonList = function(req, res) {
 };
 
 
-exports.insertForm = function(req, res) {
+exports.insertForm = function (req, res) {
     res.render('person/insertForm', {title: "인서트폼"});
 };
 
 
-exports.detailForm = function(req, res) {
+exports.getOne = function (req, res) {
 
-    var id = req.query.id;
+    var id = req.body.id;
 
-    console.log("id-->"+ id);
+    connection.query('SELECT * from Persons where id= ?', [id], function (err, rows) {
+        if (err)
+            throw err;
 
-    connection.query('SELECT * from Persons where id= ?', [id] ,  function (err, rows) {
-        if (err) throw err;
 
-        console.log('The solution is: ', rows[0]);
-        /!* res.send(rows);*!/
+        //json repsonse
+        res.json({person: rows[0]});
 
-        res.render('person/detailForm', {person: rows[0]});
     });
 };
 
-exports.updatePerson = function(req, res) {
+exports.updatePerson = function (req, res) {
 
-    var author = req.body.author;
+    var name = req.body.name;
     var content = req.body.contents;
     var id = req.body.id;
 
-    console.log("id-->"+ id);
+    console.log("id-->" + id);
 
-    connection.query('update Persons set name = ? , contents= ? where id=?', [author, content, id ] ,  function (err, rows) {
+    connection.query('update Persons set name = ? , contents= ? where id=?', [name, content, id], function (err, rows) {
         if (err)
             throw err;
 
@@ -87,12 +86,12 @@ exports.updatePerson = function(req, res) {
     });
 };
 
-exports.deletePerson = function(req, res) {
+exports.deletePerson = function (req, res) {
     var id = req.query.id;
 
-    console.log("id-->"+ id);
+    console.log("id-->" + id);
 
-    connection.query('delete  from Persons where id =?', [id] ,  function (err, rows) {
+    connection.query('delete  from Persons where id =?', [id], function (err, rows) {
         if (err)
             throw err;
         else
@@ -103,7 +102,7 @@ exports.deletePerson = function(req, res) {
 };
 
 
-exports.insert = function(req, res) {
+exports.insert = function (req, res) {
 
     getMaxValue(function (err, maxId) {
         var name = req.body.name;
