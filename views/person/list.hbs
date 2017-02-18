@@ -15,24 +15,23 @@
             $("#insertYn").val("N");
 
             $.ajax({
-                url:'/person/getOne',
-                dataType:'json',
-                type : 'POST',
-                data : {
-                    id : id
+                url: '/person/getOne',
+                dataType: 'json',
+                type: 'POST',
+                data: {
+                    id: id
                 },
-                success:function(data){
+                success: function (data) {
 
                     //alert(data.person.name);
-                    $("#name").val( data.person.name);
-                    $("#contents").val( data.person.contents);
-                    $("#id").val( data.person.id);
+                    $("#name").val(data.person.name);
+                    $("#contents").val(data.person.contents);
+                    $("#id").val(data.person.id);
                 },
-                error:function(data){
+                error: function (data) {
                     alert("error");
                 }
             });
-
 
 
         });
@@ -42,18 +41,18 @@
         })
 
         //btnSubmit
-        $('body').on('click', '#btnSubmit', function (e) {
+        $('#btnSubmit').on('click', function (e) {
             e.preventDefault();
 
-            if ( $("#insertYn").val() =='Y'){
+            if ($("#insertYn").val() == 'Y') {
                 $.post('/person/insert',
                         $('#form1').serialize(),
                         function (data, status, xhr) {
                             location.href = './list';
                         });
 
-            //수정 모드인 경우
-            }else{
+                //수정 모드인 경우
+            } else {
                 $.post('/person/updatePerson',
                         $('#form1').serialize(),
                         function (data, status, xhr) {
@@ -61,6 +60,19 @@
                         });
 
             }
+
+
+        });
+
+        $('#btnDelete').on('click', function (e) {
+            e.preventDefault();
+
+
+            $.get('/person/deletePerson',
+                    $('#form1').serialize(),
+                    function (data, status, xhr) {
+                        location.href = './list';
+                    });
 
 
         });
@@ -90,7 +102,7 @@
 </style>
 <div class="container">
 
-<input type="text" id="insertYn" >
+    <input type="hidden" id="insertYn">
     <table id="mytable" border="1" style="width: 800px" class="table ">
         <tr>
             <th style="background-color: #e3e3e3;width: 50px;">id</th>
@@ -129,7 +141,7 @@
             <!--모달 컨텐츠-->
             <div class="modal-body">
                 <form action="/person/insert" method="post" id="form1">
-                    <input type="text" id="id" name="id">
+                    <input type="hidden" id="id" name="id">
                     <table border="1" style="width: 570px" class="table">
                         <tr>
                             <td style="background-color: antiquewhite ">author</td>
@@ -158,6 +170,7 @@
                 </form>
             </div>
             <div class="modal-footer">
+                <button type="button" id="btnDelete" class="btn btn-default" data-dismiss="modal">delete</button>
                 <button type="button" id="btnSubmit" class="btn btn-default" data-dismiss="modal">Submit</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
