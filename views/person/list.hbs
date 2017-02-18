@@ -1,0 +1,47 @@
+<script type="application/javascript">
+
+    // A $( document ).ready() block.
+    $(document).ready(function () {
+
+        $( "#goWriteForm" ).click(function() {
+            location.href= "/person/insertForm";
+        });
+
+
+    });
+</script>
+<style>
+    #mytable >tbody>tr>td{
+        height:12px;
+        padding:0px;
+        border-top: 0px;
+    }
+
+
+</style>
+<div class="container">
+
+
+    <table id="mytable" border="1" style="width: 800px" class="table ">
+        <tr>
+            <th style="background-color: #e3e3e3;width: 50px;">id</th>
+            <th style="background-color: #e3e3e3;width: 500px">contents</th>
+            <th style="background-color: #e3e3e3;width: 100px;">name</th>
+        </tr>
+
+        {{#each persons}}
+            <tr>
+                <td> {{id}} </td>
+                <td><a href="/person/detailForm?id={{id}}"> {{contents}} </a></td>
+                <td> {{name}} </td>
+            </tr>
+
+        {{/each}}
+    </table>
+    <input type="button" value="글쓰기" id="goWriteForm">
+
+</div>
+
+
+</div>
+

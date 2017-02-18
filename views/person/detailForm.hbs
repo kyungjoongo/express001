@@ -1,0 +1,68 @@
+<script type="application/javascript">
+
+    // A $( document ).ready() block.
+    $(document).ready(function () {
+
+
+        $( "#btnDelete" ).click(function() {
+
+            if (confirm('삭제하시겠습니까?')){
+                location.href='./deletePerson?id={{person.id}}'
+            }
+
+        });
+
+
+    });
+</script>
+<div class="container">
+
+   <!-- {{#if result}}
+        <script>
+            alert("insert success");
+
+        </script>
+    {{/if}}-->
+
+    <form action="/person/updatePerson" method="post">
+        <table border="1" style="width: 800px" class="table">
+            <tr>
+                <td style="background-color: antiquewhite ">id</td>
+                <td>
+                    <input  type="text" id="id" name="id" value="{{person.id}}">
+                </td>
+
+            </tr>
+
+            <tr>
+                <td style="background-color: antiquewhite ">author</td>
+                <td>
+                    <input  type="text" id="author" name="author" value="{{person.name}}">
+                </td>
+
+            </tr>
+
+            <tr>
+                <td style="background-color: antiquewhite ">content</td>
+                <td>
+                    <textarea  rows="10" cols="100" id="contents" name="contents">{{person.contents}}</textarea>
+                </td>
+
+
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="목록" onclick="location.href='./list'"/>
+                    <input type="button" id="btnDelete" value="삭제" />
+                    <input type="submit" value="저장"/>
+
+                </td>
+
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+</div>
+

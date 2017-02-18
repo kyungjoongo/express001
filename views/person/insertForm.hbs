@@ -2,11 +2,30 @@
 
     // A $( document ).ready() block.
     $(document).ready(function () {
-        alert("sdflksdlfk");
+
+        if ( '{{result}}' == 'true'){
+
+            alert("insert success33333333333333333333333333");
+        }
+
+        // / alert("sdflksdlfk");
         $("#id").focus();
+
+
+
+
+
     });
 </script>
 <div class="container">
+
+   <!-- {{#if result}}
+        <script>
+            alert("insert success");
+
+        </script>
+    {{/if}}-->
+
     <form action="/person/insert" method="post">
         <table border="1" style="width: 800px" class="table">
             <tr>
@@ -18,17 +37,25 @@
             </tr>
 
             <tr>
-                <td style="background-color: antiquewhite ">name</td>
+                <td style="background-color: antiquewhite ">author</td>
                 <td>
-                    <input type="text" id="id" name="author">
+                    <input type="text" id="author" name="author">
                 </td>
 
             </tr>
 
             <tr>
-                <td style="background-color: antiquewhite ">password</td>
+                <td style="background-color: antiquewhite ">content</td>
                 <td>
                     <textarea rows="10" cols="100" id="content" name="content"></textarea>
+                </td>
+
+
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="저장"/>
+
                 </td>
 
             </tr>
