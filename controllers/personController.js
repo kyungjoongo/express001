@@ -106,10 +106,10 @@ exports.deletePerson = function(req, res) {
 exports.insert = function(req, res) {
 
     getMaxValue(function (err, maxId) {
-        var author = req.body.author;
-        var content = req.body.content;
+        var name = req.body.name;
+        var contents = req.body.contents;
 
-        connection.query("INSERT INTO Persons (id, name, age) VALUES (?, ?, ? )", [maxId, author, '45'], function (err, rows) {
+        connection.query("INSERT INTO Persons (id, contents, name) VALUES (?, ?, ? )", [maxId, contents, name], function (err, rows) {
 
             if (err) {
                 throw err;
