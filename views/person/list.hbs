@@ -1,6 +1,31 @@
 <script type="application/javascript">
 
-    // A $( document ).ready() block.
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '18980271336',
+            cookie: true,  // enable cookies to allow the server to access
+            xfbml: true,  // parse social plugins on this page
+            version: 'v2.8' // use graph api version 2.8
+        });
+
+
+        FB.getLoginStatus(function (response) {
+            //alert(response.status);
+
+            $("#loginStatus").text(response.status);
+        });
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
     $(document).ready(function () {
 
         $("#goWriteForm").click(function () {
@@ -66,8 +91,6 @@
 
         $('#btnDelete').on('click', function (e) {
             e.preventDefault();
-
-
             $.get('/person/deletePerson',
                     $('#form1').serialize(),
                     function (data, status, xhr) {
@@ -79,6 +102,22 @@
 
 
     });
+
+    function fbLogoutUser() {
+        FB.getLoginStatus(function(response) {
+            if (response && response.status === 'connected') {
+                FB.logout(function(response) {
+
+                    alert("로그아웃!");
+
+                    location.href='/login/loginForm';
+                    //document.location.reload();
+                });
+            }
+        });
+    }
+
+
 </script>
 <style>
     #mytable > tbody > tr > td {
@@ -121,7 +160,11 @@
         {{/each}}
     </table>
     <button type="button" id="btnWriteMode" data-toggle="modal" data-target="#myModal">글쓰기</button>
-
+    <button type="button" id="btnLogout" onclick="fbLogoutUser();" >logout</button>
+    <div id="loginStatus"> </div>
+    <div id="fb_image">
+        <img style="width: 5%;height: 5%" src="http://res.cloudinary.com/demo/image/facebook/{{user_id}}.jpg">
+    </div>
 </div>
 
 

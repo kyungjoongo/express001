@@ -9,6 +9,10 @@ var connection = mysql.createConnection({
     port: 3306,
     database: 'nodetest'
 });
+var logger = require('winston');
+logger.level = 'debug';
+
+
 /**
  * ###############################################
  * #
@@ -39,10 +43,15 @@ exports.getPersonList = function (req, res) {
     connection.query('SELECT * from Persons', function (err, rows) {
         if (err) throw err;
 
-        console.log('The solution is: ', rows);
-        /!* res.send(rows);*!/
+        logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
+        logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
+        logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
+        logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
+        logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
 
-        res.render('person/list', {persons: rows});
+        var user_id = req.query.user_id;
+
+        res.render('person/list', {persons: rows, user_id: user_id});
     });
 };
 
@@ -78,9 +87,6 @@ exports.updatePerson = function (req, res) {
     connection.query('update Persons set name = ? , contents= ? where id=?', [name, content, id], function (err, rows) {
         if (err)
             throw err;
-
-        console.log('The solution is: ', rows);
-        /!* res.send(rows);*!/
 
         res.redirect('list')
     });
@@ -121,5 +127,6 @@ exports.insert = function (req, res) {
         });//connection End
     });
 };
+
 
 
