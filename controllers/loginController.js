@@ -46,6 +46,14 @@ exports.loginAction = function (req, res) {
     res.redirect('/person/list?user_id='+user_id );
 };
 
+//loginNaverCallback
+exports.naverLoginCallback = function (req, res) {
+
+    res.render('login/naverLoginCallback');
+
+    //res.render('person/list', {persons: rows, user_id: user_id});
+};
+
 
 
 

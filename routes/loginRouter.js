@@ -9,6 +9,7 @@ var loginController = require('../controllers/loginController');
  */
 router.route('/login/loginForm').get(loginController.loginForm);
 router.route('/login/loginAction').get(loginController.loginAction);
+router.route('/login/naverLoginCallback').get(loginController.naverLoginCallback);
 
 
 module.exports = router;
