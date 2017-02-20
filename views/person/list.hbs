@@ -1,5 +1,18 @@
 <script type="application/javascript">
+    //facebook login lib import
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
+
+    /*
+        페이스북 Async 초기화  설정 부분.
+     */
     window.fbAsyncInit = function () {
         FB.init({
             appId: '18980271336',
@@ -9,21 +22,45 @@
         });
 
 
-        FB.getLoginStatus(function (response) {
-            //alert(response.status);
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                var uid = response.authResponse.userID;
+                var accessToken = response.authResponse.accessToken;
+                var _imgTag= '<img style="width: 5%;height: 5%" src="http://res.cloudinary.com/demo/image/facebook/'+ uid+ '.jpg">';
 
-            $("#loginStatus").text(response.status);
+                $("#fb_userid").val(uid);
+
+
+                FB.api(
+                        uid,
+                        function (response) {
+                            if (response && !response.error) {
+                                /* handle the result */
+                                $("#loginStatus").text(response.name)
+                                //alert(""+ response.name);
+                            }
+                        }
+                );
+
+
+                $("#fb_image").append(_imgTag);
+
+                //alert('uid-->'+ uid);
+                $("#loginStatus").text(response.status);
+
+            } else if (response.status === 'not_authorized') {
+                // the user is logged in to Facebook,
+                $("#loginStatus").text("노인증");
+            } else {
+                // the user isn't logged in to Facebook.
+                $("#loginStatus").text("노인증");
+            }
         });
-    };
 
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+
+
+
+    };
 
 
     $(document).ready(function () {
@@ -139,8 +176,11 @@
 
 
 </style>
+<!---#################################-->
+<!---목록 리스팅 부분-------------------->
+<!---#################################-->
+<input type="text" id="fb_userid">
 <div class="container">
-
     <input type="hidden" id="insertYn">
     <table id="mytable" border="1" style="width: 800px" class="table ">
         <tr>
@@ -162,14 +202,17 @@
     <button type="button" id="btnWriteMode" data-toggle="modal" data-target="#myModal">글쓰기</button>
     <button type="button" id="btnLogout" onclick="fbLogoutUser();" >logout</button>
     <div id="loginStatus"> </div>
+    <div id="loginStatus2"> </div>
     <div id="fb_image">
-        <img style="width: 5%;height: 5%" src="http://res.cloudinary.com/demo/image/facebook/{{user_id}}.jpg">
+
     </div>
 </div>
+<!---#################################-->
+<!---목록 리스팅 부분 End------------------->
+<!---#################################-->
 
 
 <!-- Modal -->
-
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 

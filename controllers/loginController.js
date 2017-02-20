@@ -13,7 +13,6 @@ var logger = require('winston');
 logger.level = 'debug';
 
 
-
 /**
  * ###############################################
  * #
@@ -34,16 +33,29 @@ exports.loginAction = function (req, res) {
     var user_id = req.query.user_id;
     var user_email = req.query.user_email;
 
-    //db에 유저정보 저장후에 / 유저 세션을 생성한다.
-    console.log("access_token--->"+ access_token);
-    console.log("user_id--->"+ user_id);
-    console.log("user_email--->"+ user_email);
+
+    console.log("access_token--->" + access_token);
+    console.log("user_id--->" + user_id);
+    console.log("user_email--->" + user_email);
+
+    //#######################################
+    //db에 유저정보 저장후에  유저 세션을 생성한다.
+    //#######################################
+    connection.query('insert into board_user ( oauth_uid ,access_token ,create_dt ) values ( ?,?,sysdate())',[ user_id  , access_token] , function (err, rows) {
+        var user_id = req.query.user_id;
+        if (err)
+            throw err;
+
+        res.render('person/list');
+    });
+
+
 
     logger.debug('Hello again 고경준 천재닙이십니elksdlfkldskflk logs');
 
     var user_id = encodeURIComponent(user_id);
 
-    res.redirect('/person/list?user_id='+user_id );
+    res.redirect('/person/list?user_id=' + user_id);
 };
 
 //loginNaverCallback
