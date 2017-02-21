@@ -1,23 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var mysql = require('mysql');
-var request = require('request');
-/*var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    port: 3306,
-    database: 'nodetest'
-});*/
 
-/*mysql://bfdf677baa9234:e2db221b@us-cdbr-iron-east-04.cleardb.net/heroku_8c395f7fadf21cc?reconnect=true*/
-var connection = mysql.createConnection({
-    host: 'us-cdbr-iron-east-04.cleardb.net',
-    user: 'bfdf677baa9234',
-    password: 'e2db221b',
-    port: 3306,
-    database: 'heroku_8c395f7fadf21cc'
-});
+var request = require('request');
+var db = require('./dbconfig');
+
 
 
 var logger = require('winston');
@@ -27,7 +13,7 @@ logger.level = 'debug';
 /**
  * ###############################################
  * #
- * #  personController
+ * #  board Controller
  * #
  * ###############################################
  */
@@ -39,7 +25,7 @@ logger.level = 'debug';
 function getMaxValue(callback) {
     var query = 'select (max(id)+1) as id from Persons';
 
-    connection.query(query, function (err, result) {
+    db.connection.query(query, function (err, result) {
         if (err) {
             callback(err, null);
         } else
@@ -51,7 +37,7 @@ function getMaxValue(callback) {
 
 
 exports.getPersonList = function (req, res) {
-    connection.query('SELECT * from Persons', function (err, rows) {
+    db.connection.query('SELECT * from Persons', function (err, rows) {
         if (err) throw err;
 
         logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
@@ -80,15 +66,17 @@ exports.insertForm = function (req, res) {
 
 exports.getOne = function (req, res) {
 
-    var id = req.body.id;
+    var id = req.query.id;
 
-    connection.query('SELECT * from Persons where id= ?', [id], function (err, rows) {
+    db.connection.query('SELECT * from Persons where id= ?', [id], function (err, rows) {
         if (err)
             throw err;
 
 
-        //json repsonse
-        res.json({person: rows[0]});
+        /*//json repsonse
+        res.json({person: rows[0]});*/
+
+        res.render('person/detailForm', {person: rows[0]});
 
     });
 };
@@ -101,7 +89,7 @@ exports.updatePerson = function (req, res) {
 
     console.log("id-->" + id);
 
-    connection.query('update Persons set name = ? , contents= ? where id=?', [name, content, id], function (err, rows) {
+    db.connection.query('update Persons set name = ? , contents= ? where id=?', [name, content, id], function (err, rows) {
         if (err)
             throw err;
 
@@ -114,7 +102,7 @@ exports.deletePerson = function (req, res) {
 
     console.log("id-->" + id);
 
-    connection.query('delete  from Persons where id =?', [id], function (err, rows) {
+    db.connection.query('delete  from Persons where id =?', [id], function (err, rows) {
         if (err)
             throw err;
         else
@@ -131,7 +119,7 @@ exports.insert = function (req, res) {
         var name = req.body.name;
         var contents = req.body.contents;
 
-        connection.query("INSERT INTO Persons (id, contents, name) VALUES (?, ?, ? )", [maxId, contents, name], function (err, rows) {
+        db.connection.query("INSERT INTO Persons (id, contents, name) VALUES (?, ?, ? )", [maxId, contents, name], function (err, rows) {
 
             if (err) {
                 throw err;
@@ -141,7 +129,7 @@ exports.insert = function (req, res) {
                 //res.render('person/list', {result: "true"});
             }
 
-        });//connection End
+        });//db.connection End
     });
 };
 

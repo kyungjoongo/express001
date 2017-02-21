@@ -2,20 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var request = require('request');
-/*var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    port: 3306,
-    database: 'nodetest'
-});*/
-var connection = mysql.createConnection({
-    host: 'us-cdbr-iron-east-04.cleardb.net',
-    user: 'bfdf677baa9234',
-    password: 'e2db221b',
-    port: 3306,
-    database: 'heroku_8c395f7fadf21cc'
-});
+var db = require('./dbconfig');
 var logger = require('winston');
 logger.level = 'debug';
 
@@ -48,7 +35,7 @@ exports.loginAction = function (req, res) {
     //#######################################
     //db에 유저정보 저장후에  유저 세션을 생성한다.
     //#######################################
-    connection.query('insert into board_user ( oauth_uid ,access_token ,create_dt ) values ( ?,?,sysdate())',[ user_id  , access_token] , function (err, rows) {
+    db.connection.query('insert into board_user ( oauth_uid ,access_token ,create_dt ) values ( ?,?,sysdate())',[ user_id  , access_token] , function (err, rows) {
         var user_id = req.query.user_id;
         if (err)
             throw err;

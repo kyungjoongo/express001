@@ -5,10 +5,21 @@
 
 
         $( "#btnDelete" ).click(function() {
-
             if (confirm('삭제하시겠습니까?')){
                 location.href='./deletePerson?id={{person.id}}'
             }
+
+        });
+
+        //btnModifyMode
+        $( "#btnModifyMode" ).click(function() {
+
+
+            $("#name").removeAttr('readonly');
+            $("#contents").removeAttr('readonly');
+
+            $("#name").css("background-color","white");
+            $("#contents").css("background-color","white");
 
         });
 
@@ -29,15 +40,15 @@
             <tr>
                 <td style="background-color: antiquewhite ">id</td>
                 <td>
-                    <input  type="text" id="id" name="id" value="{{person.id}}">
+                    <input  type="text" id="id" style="background-color: #e3e3e3" readonly name="id" value="{{person.id}}">
                 </td>
 
             </tr>
 
             <tr>
-                <td style="background-color: antiquewhite ">author</td>
+                <td style="background-color: antiquewhite ">name</td>
                 <td>
-                    <input  type="text" id="author" name="author" value="{{person.name}}">
+                    <input  type="text" style="background-color: #e3e3e3" id="name" readonly name="name" value="{{person.name}}">
                 </td>
 
             </tr>
@@ -45,7 +56,7 @@
             <tr>
                 <td style="background-color: antiquewhite ">content</td>
                 <td>
-                    <textarea  rows="10" cols="100" id="contents" name="contents">{{person.contents}}</textarea>
+                    <textarea  rows="10" cols="100" style="background-color: #e3e3e3" readonly id="contents" name="contents">{{person.contents}}</textarea>
                 </td>
 
 
@@ -53,6 +64,7 @@
             <tr>
                 <td colspan="2">
                     <input type="button" value="목록" onclick="location.href='./list'"/>
+                    <input type="button" id="btnModifyMode" value="수정모드" />
                     <input type="button" id="btnDelete" value="삭제" />
                     <input type="submit" value="저장"/>
 
