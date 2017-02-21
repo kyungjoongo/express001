@@ -2,13 +2,24 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var request = require('request');
-var connection = mysql.createConnection({
+/*var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
     port: 3306,
     database: 'nodetest'
+});*/
+
+/*mysql://bfdf677baa9234:e2db221b@us-cdbr-iron-east-04.cleardb.net/heroku_8c395f7fadf21cc?reconnect=true*/
+var connection = mysql.createConnection({
+    host: 'us-cdbr-iron-east-04.cleardb.net',
+    user: 'bfdf677baa9234',
+    password: 'e2db221b',
+    port: 3306,
+    database: 'heroku_8c395f7fadf21cc'
 });
+
+
 var logger = require('winston');
 logger.level = 'debug';
 
@@ -48,6 +59,12 @@ exports.getPersonList = function (req, res) {
         logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
         logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
         logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
+
+
+
+
+
+
 
         var user_id = req.query.user_id;
 

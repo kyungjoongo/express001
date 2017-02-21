@@ -2,12 +2,19 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var request = require('request');
-var connection = mysql.createConnection({
+/*var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
     port: 3306,
     database: 'nodetest'
+});*/
+var connection = mysql.createConnection({
+    host: 'us-cdbr-iron-east-04.cleardb.net',
+    user: 'bfdf677baa9234',
+    password: 'e2db221b',
+    port: 3306,
+    database: 'heroku_8c395f7fadf21cc'
 });
 var logger = require('winston');
 logger.level = 'debug';
