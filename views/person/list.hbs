@@ -76,7 +76,7 @@
 <input type="hidden" id="fb_userid">
 <div class="container">
     <input type="hidden" id="insertYn">
-    <table id="mytable" border="1" style="width: 800px" class="table ">
+    <table id="mytable" border="1" style="width: 400px" class="table ">
         <tr>
             <th style="background-color: #e3e3e3;width: 50px;">id</th>
             <th style="background-color: #e3e3e3;width: 500px">contents</th>
@@ -93,7 +93,8 @@
 
         {{/each}}
     </table>
-    <button type="button" id="goWriteForm">글쓰기</button>
+
+    <a href="#" id="goWriteForm" data-role="button">글쓰기</a>
     <button type="button" id="btnLogout" onclick="fbLogoutUser();">logout</button>
     <div id="loginStatus"></div>
     <div id="loginStatus2"></div>
