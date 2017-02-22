@@ -1,11 +1,8 @@
 var express = require('express');
 var router = express.Router();
-
 var request = require('request');
 var db = require('./dbconfig');
-
-
-
+var cheerio = require('cheerio');
 var logger = require('winston');
 logger.level = 'debug';
 
@@ -47,11 +44,6 @@ exports.getPersonList = function (req, res) {
         logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
 
 
-
-
-
-
-
         var user_id = req.query.user_id;
 
         res.render('person/list', {persons: rows, user_id: user_id});
@@ -74,7 +66,7 @@ exports.getOne = function (req, res) {
 
 
         /*//json repsonse
-        res.json({person: rows[0]});*/
+         res.json({person: rows[0]});*/
 
         res.render('person/detailForm', {person: rows[0]});
 
@@ -110,6 +102,38 @@ exports.deletePerson = function (req, res) {
 
         res.redirect('list')
     });
+};
+
+exports.crawler = function (req, res) {
+
+
+    var url = "http://www.sherdog.com/events/UFC-209-Woodley-vs-Thompson-2-56255";
+
+
+    //웹 크로울링.........
+    request(url, function (error, res, body) {
+        if (error) throw error;
+
+        var $ = cheerio.load(body);
+
+        //console.log(body);
+        /*<span itemprop="name">Khabib Nurmagomedov</span>*/
+        var postElements = $("span[itemprop=name]");
+        postElements.each(function () {
+
+
+            /*<span itemprop="name">Tyron Woodley</span>*/
+            var postTitle = $(this).text();
+            /*var postUrl = $(this).find("h1 a").attr("href");*/
+
+            console.log(postTitle);
+           /* console.log(postUrl);*/
+        });
+
+
+    });
+
+    res.redirect('list');
 };
 
 

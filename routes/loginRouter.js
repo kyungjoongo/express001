@@ -12,4 +12,7 @@ router.route('/login/loginAction').get(loginController.loginAction);
 router.route('/login/naverLoginCallback').get(loginController.naverLoginCallback);
 
 
+
+
+
 module.exports = router;

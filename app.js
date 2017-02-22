@@ -11,6 +11,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var personRouter = require('./routes/personRouter');
 var loginRouter = require('./routes/loginRouter');
+var mobileRouter = require('./routes/mobileRouter');
 
 var config = require('./config')();
 
@@ -37,6 +38,7 @@ app.use('/users', users);
 app.use('/', personRouter);
 //loginRouter
 app.use('/', loginRouter);
+app.use('/', mobileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

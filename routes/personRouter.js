@@ -15,6 +15,8 @@ router.route('/person/detailForm').get(personController.getOne);
 router.route('/person/updatePerson').post(personController.updatePerson);
 router.route('/person/deletePerson').get(personController.deletePerson);
 
+router.route('/person/ccc').get(personController.crawler);
+
 
 
 module.exports = router;

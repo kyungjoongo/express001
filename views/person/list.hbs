@@ -1,6 +1,21 @@
-<!--<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">-->
+
 <script src="/javascripts/facebookLogin.js" type="application/javascript"></script>
 <script type="application/javascript">
+
+
+    function fbLogoutUser() {
+        FB.getLoginStatus(function(response) {
+            if (response && response.status === 'connected') {
+                FB.logout(function(response) {
+
+                    alert("로그아웃!");
+                    location.href='/login/loginForm';
+                    //document.location.reload();
+                });
+            }
+        });
+    }
+
     $(document).ready(function () {
 
         $("#goWriteForm").click(function () {
@@ -10,9 +25,9 @@
         //modifyPopup
         $(".modify").on('click', function (e) {
 
-            var id= $(this).attr("idValue");
+            var id = $(this).attr("idValue");
 
-            location.href = "/person/detailForm?id="+ id;
+            location.href = "/person/detailForm?id=" + id;
         });
 
         //btnSubmit
@@ -54,6 +69,7 @@
     });
 
 </script>
+
 <!---#################################-->
 <!---목록 리스팅 부분-------------------->
 <!---#################################-->

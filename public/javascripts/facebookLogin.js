@@ -11,7 +11,6 @@
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-
 /*
  페이스북 Async 초기화  설정 부분.
  */
@@ -60,7 +59,6 @@ window.fbAsyncInit = function () {
     });
 
 };
-
 
 function fbLogoutUser() {
     FB.getLoginStatus(function(response) {
