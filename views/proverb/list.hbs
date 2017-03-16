@@ -19,7 +19,7 @@
     $(document).ready(function () {
 
         $("#goWriteForm").click(function () {
-            location.href = "/person/insertForm";
+            location.href = "/proverb/insertForm";
         });
 
         //modifyPopup
@@ -27,7 +27,7 @@
 
             var id = $(this).attr("idValue");
 
-            location.href = "/person/detailForm?id=" + id;
+            location.href = "/proverb/detailForm?id=" + id;
         });
 
         //btnSubmit
@@ -35,7 +35,7 @@
             e.preventDefault();
 
             if ($("#insertYn").val() == 'Y') {
-                $.post('/person/insert',
+                $.post('/proverb/insert',
                         $('#form1').serialize(),
                         function (data, status, xhr) {
                             location.href = './list';
@@ -43,7 +43,7 @@
 
                 //수정 모드인 경우
             } else {
-                $.post('/person/updatePerson',
+                $.post('/proverb/updatePerson',
                         $('#form1').serialize(),
                         function (data, status, xhr) {
                             location.href = './list';
@@ -56,7 +56,7 @@
 
         $('#btnDelete').on('click', function (e) {
             e.preventDefault();
-            $.get('/person/deletePerson',
+            $.get('/proverb/deletePerson',
                     $('#form1').serialize(),
                     function (data, status, xhr) {
                         location.href = './list';
@@ -86,9 +86,9 @@
         {{#each persons}}
             <tr>
                 <td> {{id}} </td>
-                <!--<td><a href="/person/detailForm?id={{id}}"> {{contents}} </a></td>-->
+                <!--<td><a href="/proverb/detailForm?id={{id}}"> {{contents}} </a></td>-->
                 <td><a class="modify" idValue="{{id}}"> {{contents}} </a></td>
-                <td> {{name}} </td>
+                <td> {{author}} </td>
             </tr>
 
         {{/each}}

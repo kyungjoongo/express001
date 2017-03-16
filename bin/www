@@ -8,6 +8,11 @@ var app = require('../app');
 var debug = require('debug')('express001:server');
 var http = require('http');
 
+process.on('uncaughtException', function (err) {
+    console.log('Caught exception: ' + err);
+
+});
+
 /**
  * Get port from environment and store in Express.
  */
@@ -90,3 +95,5 @@ function onListening() {
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
 }
+
+

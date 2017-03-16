@@ -33,26 +33,28 @@ function getMaxValue(callback) {
 }
 
 
+/**
+ * 퍼슨리스트 fetch 컨트롤러
+ * @param req
+ * @param res
+ */
 exports.getPersonList = function (req, res) {
-    db.connection.query('SELECT * from Persons', function (err, rows) {
-        if (err) throw err;
-
-        logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
-        logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
-        logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
-        logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
-        logger.debug('고경준 천재님이십니다sdlfksdlfksldkf');
-
+    db.connection.query('SELECT * from proverb', function (err, rows) {
+        if (err)
+            throw err;
 
         var user_id = req.query.user_id;
 
-        res.render('person/list', {persons: rows, user_id: user_id});
+//        res.render('proverb/list', {persons: rows, user_id: user_id});
+
+        res.json({proverb:rows});
     });
 };
 
 
+
 exports.insertForm = function (req, res) {
-    res.render('person/insertForm', {title: "인서트폼"});
+    res.render('proverb/insertForm', {title: "인서트폼"});
 };
 
 
@@ -60,7 +62,7 @@ exports.getOne = function (req, res) {
 
     var id = req.query.id;
 
-    db.connection.query('SELECT * from Persons where id= ?', [id], function (err, rows) {
+    db.connection.query('SELECT * from proverb where id= ?', [id], function (err, rows) {
         if (err)
             throw err;
 
@@ -68,7 +70,7 @@ exports.getOne = function (req, res) {
         /*//json repsonse
          res.json({person: rows[0]});*/
 
-        res.render('person/detailForm', {person: rows[0]});
+        res.render('proverb/detailForm', {person: rows[0]});
 
     });
 };
@@ -150,7 +152,7 @@ exports.insert = function (req, res) {
             } else {
 
                 res.redirect('list');
-                //res.render('person/list', {result: "true"});
+                //res.render('proverb/list', {result: "true"});
             }
 
         });//db.connection End
