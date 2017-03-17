@@ -39,7 +39,7 @@ function getMaxValue(callback) {
  * @param res
  */
 exports.getPersonList = function (req, res) {
-    db.connection.query('SELECT * from proverb', function (err, rows) {
+    db.connection.query('SELECT * from proverb order by id desc', function (err, rows) {
         if (err)
             throw err;
 
