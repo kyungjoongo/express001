@@ -3,7 +3,7 @@
     // A $( document ).ready() block.
     $(document).ready(function () {
 
-/*        if ( '{{result}}' == 'true'){
+        /*        if ( '{{result}}' == 'true'){
 
             alert("insert success33333333333333333333333333");
         }*/
@@ -12,27 +12,28 @@
 </script>
 <div class="container">
 
-   <!-- {{#if result}}
+    <!-- {{#if result}}
         <script>
             alert("insert success");
 
         </script>
     {{/if}}-->
 
-    <form data-ajax="false" action="/person/insert" method="post">
-        <table border="1" style="width: 400px" class="table">
-           <!-- <tr>
-                <td style="background-color: antiquewhite ">id</td>
-                <td>
-                    <input type="text" id="id" name="id">
-                </td>
 
-            </tr>-->
+    <form data-ajax="false" action="/proverb/insert" method="post" enctype="multipart/form-data">
+        <table border="1" style="width: 400px" class="table">
+            <!-- <tr>
+                 <td style="background-color: antiquewhite ">id</td>
+                 <td>
+                     <input type="text" id="id" name="id">
+                 </td>
+
+             </tr>-->
 
             <tr>
-                <td style="background-color: antiquewhite ">name</td>
+                <td style="background-color: antiquewhite ">author</td>
                 <td>
-                    <input type="text" id="name" name="name">
+                    <input type="text" id="author" name="author">
                 </td>
 
             </tr>
@@ -41,6 +42,14 @@
                 <td style="background-color: antiquewhite ">contents</td>
                 <td>
                     <textarea rows="10" cols="100" id="contents" name="contents"></textarea>
+                </td>
+
+
+            </tr>
+            <tr>
+                <td style="background-color: antiquewhite ">contents</td>
+                <td>
+                    <input type="file" id="image_file" name="image_file">
                 </td>
 
 

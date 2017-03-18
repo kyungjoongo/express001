@@ -38,7 +38,19 @@ function getMaxValue(callback) {
  * @param req
  * @param res
  */
-exports.getPersonList = function (req, res) {
+exports.getList = function (req, res) {
+    db.connection.query('SELECT * from proverb order by id desc', function (err, rows) {
+        if (err)
+            throw err;
+
+        var user_id = req.query.user_id;
+
+        res.render('proverb/list', {persons: rows, user_id: user_id});
+
+    });
+};
+
+exports.getListToJson = function (req, res) {
     db.connection.query('SELECT * from proverb order by id desc', function (err, rows) {
         if (err)
             throw err;
@@ -70,7 +82,7 @@ exports.getOne = function (req, res) {
         /*//json repsonse
          res.json({person: rows[0]});*/
 
-        res.render('proverb/detailForm', {person: rows[0]});
+        res.render('proverb/detailForm', {proverb: rows[0]});
 
     });
 };
@@ -83,7 +95,7 @@ exports.updatePerson = function (req, res) {
 
     console.log("id-->" + id);
 
-    db.connection.query('update Persons set name = ? , contents= ? where id=?', [name, content, id], function (err, rows) {
+    db.connection.query('update Proverb set author = ? , contents= ? where id=?', [name, content, id], function (err, rows) {
         if (err)
             throw err;
 
@@ -96,7 +108,7 @@ exports.deletePerson = function (req, res) {
 
     console.log("id-->" + id);
 
-    db.connection.query('delete  from Persons where id =?', [id], function (err, rows) {
+    db.connection.query('delete  from Proverb where id =?', [id], function (err, rows) {
         if (err)
             throw err;
         else

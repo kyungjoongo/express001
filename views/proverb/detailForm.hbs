@@ -6,7 +6,7 @@
 
         $( "#btnDelete" ).click(function() {
             if (confirm('삭제하시겠습니까?')){
-                location.href='./deletePerson?id={{person.id}}'
+                location.href='./deletePerson?id={{proverb.id}}'
             }
 
         });
@@ -35,12 +35,12 @@
         </script>
     {{/if}}-->
 
-    <form action="/person/updatePerson" data-ajax="false" method="post">
+    <form action="/proverb/update" data-ajax="false" method="post">
         <table border="1" style="width: 400px" class="table">
             <tr>
                 <td style="background-color: antiquewhite ">id</td>
                 <td>
-                    <input  type="text" id="id" style="background-color: #e3e3e3" readonly name="id" value="{{person.id}}">
+                    <input  type="text" id="id" style="background-color: #e3e3e3" readonly name="id" value="{{proverb.id}}">
                 </td>
 
             </tr>
@@ -48,7 +48,7 @@
             <tr>
                 <td style="background-color: antiquewhite ">name</td>
                 <td>
-                    <input  type="text" style="background-color: #e3e3e3" id="name" readonly name="name" value="{{person.name}}">
+                    <input  type="text" style="background-color: #e3e3e3" id="name" readonly name="name" value="{{proverb.author}}">
                 </td>
 
             </tr>
@@ -56,7 +56,7 @@
             <tr>
                 <td style="background-color: antiquewhite ">content</td>
                 <td>
-                    <textarea  rows="10" cols="100" style="background-color: #e3e3e3" readonly id="contents" name="contents">{{person.contents}}</textarea>
+                    <textarea  rows="10" cols="100" style="background-color: #e3e3e3" readonly id="contents" name="contents">{{proverb.contents}}</textarea>
                 </td>
 
 
