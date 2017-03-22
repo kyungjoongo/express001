@@ -7,6 +7,8 @@ var logger = require('winston');
 logger.level = 'debug';
 
 
+
+
 /**
  * ###############################################
  * #
@@ -60,6 +62,31 @@ exports.getListToJson = function (req, res) {
 //        res.render('proverb/list', {persons: rows, user_id: user_id});
 
         res.json({proverb:rows});
+    });
+};
+
+exports.getOneToJson = function (req, res) {
+
+    var id = req.query.id;
+
+    var minimum = 43;
+    var maximum = 532
+        ;
+
+    var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+
+    db.connection.query('SELECT * from proverb where id= ?', [randomnumber], function (err, rows) {
+        if (err)
+            throw err;
+
+
+        /*//json repsonse
+         res.json({person: rows[0]});*/
+
+        //res.render('proverb/detailForm', {proverb: rows[0]});
+
+        res.json({proverb: rows[0]});
+
     });
 };
 
@@ -121,7 +148,7 @@ exports.deletePerson = function (req, res) {
 exports.crawler = function (req, res) {
 
 
-    var url = "http://www.sherdog.com/events/UFC-209-Woodley-vs-Thompson-2-56255";
+    var url = "http://www.instagram.com/denis77777123/";
 
 
     //웹 크로울링.........
@@ -130,35 +157,61 @@ exports.crawler = function (req, res) {
 
         var $ = cheerio.load(body);
 
-        //console.log(body);
-        /*<span itemprop="name">Khabib Nurmagomedov</span>*/
-        var postElements = $("span[itemprop=name]");
-        postElements.each(function () {
+
+        var imgTag = $("img[alt='Change profile photo']").attr("src");
+
+       /* var postTitle = imgTag.attr("src");*/
+        console.log(imgTag);
+
+      /*  var postElements = $("button._jzgri");
+        postElements.each(function() {
+            /!*var postTitle = $(this).find("h1").text();*!/
+            var postUrl = $(this).find("img").attr("src");
+
+            console.log(postUrl);
+        });*/
+
+       /* postElements.each(function () {
 
 
-            /*<span itemprop="name">Tyron Woodley</span>*/
-            var postTitle = $(this).text();
-            /*var postUrl = $(this).find("h1 a").attr("href");*/
+            /!*<span itemprop="name">Tyron Woodley</span>*!/
+            var postTitle = $(this).attr("src");
+            /!*var postUrl = $(this).find("h1 a").attr("href");*!/
 
             console.log(postTitle);
-           /* console.log(postUrl);*/
-        });
+           /!* console.log(postUrl);*!/
+        });*/
 
 
     });
 
-    res.redirect('list');
+    //res.redirect('list');
 };
+
+
 
 
 exports.insert = function (req, res) {
 
     getMaxValue(function (err, maxId) {
-        var name = req.body.name;
+        var author = req.body.author;
         var contents = req.body.contents;
 
-        db.connection.query("INSERT INTO Persons (id, contents, name) VALUES (?, ?, ? )", [maxId, contents, name], function (err, rows) {
+        if (!req.files)
+            return res.status(400).send('No files were uploaded.');
 
+        // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+        let imageFile = req.files.image;
+
+        imageFile.mv('c:\\upload\\'+ imageFile.name, function(err) {
+            if (err)
+                return res.status(500).send(err);
+        });
+
+        var imageFileUrl = imageFile.name;
+
+
+        db.connection.query("INSERT INTO Proverb ( contents, author, image_uri) VALUES (?, ?, ? )", [ contents, author, imageFileUrl], function (err, rows) {
             if (err) {
                 throw err;
             } else {

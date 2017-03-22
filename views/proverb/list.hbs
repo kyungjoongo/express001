@@ -1,15 +1,14 @@
-
 <script src="/javascripts/facebookLogin.js" type="application/javascript"></script>
 <script type="application/javascript">
 
 
     function fbLogoutUser() {
-        FB.getLoginStatus(function(response) {
+        FB.getLoginStatus(function (response) {
             if (response && response.status === 'connected') {
-                FB.logout(function(response) {
+                FB.logout(function (response) {
 
                     alert("로그아웃!");
-                    location.href='/login/loginForm';
+                    location.href = '/login/loginForm';
                     //document.location.reload();
                 });
             }
@@ -26,8 +25,8 @@
         $(".modify").on('click', function (e) {
 
             var id = $(this).attr("idValue");
-
             location.href = "/proverb/detailForm?id=" + id;
+
         });
 
         //btnSubmit
@@ -73,37 +72,98 @@
 <!---#################################-->
 <!---목록 리스팅 부분-------------------->
 <!---#################################-->
-<input type="hidden" id="fb_userid">
-<div class="container">
-    <input type="hidden" id="insertYn">
-    <table id="mytable" border="1" style="width: 400px" class="table ">
-        <tr>
-            <th style="background-color: #e3e3e3;width: 50px;">id</th>
-            <th style="background-color: #e3e3e3;width: 500px">contents</th>
-            <th style="background-color: #e3e3e3;width: 100px;">name</th>
-        </tr>
-
-        {{#each persons}}
+<div data-role="page" id="list">
+    <input type="hidden" id="fb_userid">
+    <div class="container">
+        <input type="hidden" id="insertYn">
+        <table id="mytable" border="1" style="width: 400px" class="table ">
             <tr>
-                <td> {{id}} </td>
-                <!--<td><a href="/proverb/detailForm?id={{id}}"> {{contents}} </a></td>-->
-                <td><a class="modify" idValue="{{id}}"> {{contents}} </a></td>
-                <td> {{author}} </td>
+                <th style="background-color: #e3e3e3;width: 50px;">id</th>
+                <th style="background-color: #e3e3e3;width: 500px">contents</th>
+                <th style="background-color: #e3e3e3;width: 100px;">name</th>
             </tr>
 
-        {{/each}}
-    </table>
+            {{#each persons}}
+                <tr>
+                    <td> {{id}} </td>
+                    <!--<td><a href="/proverb/detailForm?id={{id}}"> {{contents}} </a></td>-->
+                    <td><a class="modify" href="#detailView" idValue="{{id}}"> {{contents}} </a></td>
+                    <td> {{author}} </td>
+                </tr>
 
-    <a href="#" id="goWriteForm" data-role="button">글쓰기</a>
-    <button type="button" id="btnLogout" onclick="fbLogoutUser();">logout</button>
-    <div id="loginStatus"></div>
-    <div id="loginStatus2"></div>
-    <div id="fb_image">
+            {{/each}}
+        </table>
 
+        <a href="#" id="goWriteForm" data-role="button">글쓰기</a>
+        <button type="button" id="btnLogout" onclick="fbLogoutUser();">logout</button>
+        <div id="loginStatus"></div>
+        <div id="loginStatus2"></div>
+        <div id="fb_image">
+
+        </div>
     </div>
 </div>
 <!---#################################-->
 <!---목록 리스팅 부분 End------------------->
 <!---#################################-->
+
+
+<!--#############-->
+<!--detailView-->
+<!--#############-->
+<div data-role="page" id="detailView">
+
+    <div class="container">
+
+        <!-- {{#if result}}
+        <script>
+            alert("insert success");
+
+        </script>
+    {{/if}}-->
+
+        <form action="/proverb/update" data-ajax="false" method="post">
+            <table border="1" style="width: 400px" class="table">
+                <tr>
+                    <td style="background-color: antiquewhite ">id</td>
+                    <td>
+                        <input type="text" id="id" style="background-color: #e3e3e3" readonly name="id"
+                               value="{{proverb.id}}">
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td style="background-color: antiquewhite ">name</td>
+                    <td>
+                        <input type="text" style="background-color: #e3e3e3" id="name" readonly name="name"
+                               value="{{proverb.author}}">
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td style="background-color: antiquewhite ">content</td>
+                    <td>
+                        <textarea rows="10" cols="100" style="background-color: #e3e3e3" readonly id="contents"
+                                  name="contents">{{proverb.contents}}</textarea>
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="button" value="목록" onclick="location.href='./list'"/>
+                        <input type="button" id="btnModifyMode" value="수정모드"/>
+                        <input type="button" id="btnDelete" value="삭제"/>
+                        <input type="submit" value="저장"/>
+
+                    </td>
+
+                </tr>
+            </table>
+        </form>
+    </div>
+
 </div>
 
