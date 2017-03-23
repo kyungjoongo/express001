@@ -91,6 +91,32 @@ exports.getOneToJson = function (req, res) {
 };
 
 
+exports.getOneToJsonEnglish = function (req, res) {
+
+    var id = req.query.id;
+
+    var minimum = 43;
+    var maximum = 532
+        ;
+
+    var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+
+    db.connection.query('SELECT * from english_proverb where id= ?', [randomnumber], function (err, rows) {
+        if (err)
+            throw err;
+
+
+        /*//json repsonse
+         res.json({person: rows[0]});*/
+
+        //res.render('proverb/detailForm', {proverb: rows[0]});
+
+        res.json({proverb: rows[0]});
+
+    });
+};
+
+
 
 exports.insertForm = function (req, res) {
     res.render('proverb/insertForm', {title: "인서트폼"});

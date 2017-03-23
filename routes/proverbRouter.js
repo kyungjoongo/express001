@@ -15,6 +15,7 @@ router.route('/proverb/insert').post(proverbController.insert);
 router.route('/proverb/').get(proverbController.insertForm);
 router.route('/proverb/detailForm').get(proverbController.getOne);
 router.route('/proverb/getOneToJson').get(proverbController.getOneToJson);
+router.route('/proverb/getOneToJsonEnglish').get(proverbController.getOneToJsonEnglish);
 router.route('/proverb/update').post(proverbController.updatePerson);
 router.route('/proverb/deletePerson').get(proverbController.deletePerson);
 
