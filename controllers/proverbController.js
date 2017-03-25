@@ -65,6 +65,13 @@ exports.getListToJson = function (req, res) {
     });
 };
 
+
+/**
+ * slkflskdflksadlfklsdkflksdf
+ * @param {type} req
+ * @param {type} res
+ * @returns {undefined}
+ */
 exports.getOneToJson = function (req, res) {
 
     var id = req.query.id;
