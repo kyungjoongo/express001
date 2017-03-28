@@ -80,7 +80,7 @@ exports.getOneToJson = function (req, res) {
     var id = req.query.id;
 
     var minimum = 43;
-    var maximum = 532
+    var maximum = 819
         ;
 
     var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
