@@ -80,7 +80,7 @@ exports.getOneToJson = function (req, res) {
     var id = req.query.id;
 
     var minimum = 43;
-    var maximum = 532
+    var maximum = 819
         ;
 
     var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
@@ -107,7 +107,7 @@ exports.getOneToJsonEnglish = function (req, res) {
     var id = req.query.id;
 
     var minimum = 43;
-    var maximum = 817
+    var maximum = 572
         ;
 
     var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
@@ -124,6 +124,10 @@ exports.getOneToJsonEnglish = function (req, res) {
 
         res.json({proverb: rows[0]});
 
+    });
+
+    query.on('end', function() {
+        connection.release();
     });
 };
 
