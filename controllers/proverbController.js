@@ -75,7 +75,7 @@ exports.getOneToJson = function (req, res) {
 
     var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
 
-    db.connection.query('SELECT * from proverb where id= ?', [randomnumber], function (err, rows) {
+    var query= db.connection.query('SELECT * from proverb where id= ?', [randomnumber], function (err, rows) {
         if (err)
             throw err;
 
@@ -87,6 +87,10 @@ exports.getOneToJson = function (req, res) {
 
         res.json({proverb: rows[0]});
 
+    });
+
+    query.on('end', function() {
+        connection.release();
     });
 };
 
