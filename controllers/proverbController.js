@@ -12,14 +12,16 @@ logger.level = 'debug';
 /**
  * ###############################################
  * #
- * #  board Controller
+ * #  board Controller 방가방가워요sldkflsdkflsdklfksdlfk
+ * #
  * #
  * ###############################################
  */
 
 /**
  * max value fetch person table
- * @param callback
+ * @param callback  lkfldsklgkdfslgklsdfkglsdfkg
+ * 
  */
 function getMaxValue(callback) {
     var query = 'select (max(id)+1) as id from Persons';
@@ -35,8 +37,9 @@ function getMaxValue(callback) {
 }
 
 
+
 /**
- * 퍼슨리스트 fetch 컨트롤러
+ * 
  * @param req
  * @param res
  */
@@ -65,6 +68,13 @@ exports.getListToJson = function (req, res) {
     });
 };
 
+
+/**
+ * slkflskdflksadlfklsdkflksdf
+ * @param {type} req
+ * @param {type} res
+ * @returns {undefined}
+ */
 exports.getOneToJson = function (req, res) {
 
     var id = req.query.id;
@@ -79,13 +89,10 @@ exports.getOneToJson = function (req, res) {
         if (err)
             throw err;
 
-
-        /*//json repsonse
-         res.json({person: rows[0]});*/
-
-        //res.render('proverb/detailForm', {proverb: rows[0]});
-
         res.json({proverb: rows[0]});
+        
+        
+        
 
     });
 

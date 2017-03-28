@@ -18,7 +18,6 @@ router.route('/proverb/getOneToJson').get(proverbController.getOneToJson);
 router.route('/proverb/getOneToJsonEnglish').get(proverbController.getOneToJsonEnglish);
 router.route('/proverb/update').post(proverbController.updatePerson);
 router.route('/proverb/deletePerson').get(proverbController.deletePerson);
-
 router.route('/proverb/ccc').get(proverbController.crawler);
 
 
