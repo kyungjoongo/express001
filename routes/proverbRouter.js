@@ -9,7 +9,7 @@ var proverbController = require('../controllers/proverbController');
  */
 router.route('/proverb/list').get(proverbController.getList);
 
-router.route('/proverb/listToJson').get(proverbController.getListToJson);
+router.route('/proverb/getListToJson').get(proverbController.getListToJson);
 router.route('/proverb/insertForm').get(proverbController.insertForm);
 router.route('/proverb/insert').post(proverbController.insert);
 router.route('/proverb/').get(proverbController.insertForm);
