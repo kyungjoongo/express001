@@ -69,6 +69,7 @@ exports.getListToJson = function (req, res) {
 };
 
 
+
 /**
  * slkflskdflksadlfklsdkflksdf
  * @param {type} req
@@ -87,7 +88,7 @@ exports.getOneToJson = function (req, res) {
 
 
 
-    pool.getConnection(function(err,connection){
+    db.pool.getConnection(function(err,connection){
         var query = connection.query('SELECT * from proverb where id= ?', [randomnumber], function (err, rows) {
             if(err){
                 connection.release();
