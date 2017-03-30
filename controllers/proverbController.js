@@ -85,20 +85,21 @@ exports.getOneToJson = function (req, res) {
 
     var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
 
-    var query= db.connection.query('SELECT * from proverb where id= ?', [randomnumber], function (err, rows) {
-        if (err)
-            throw err;
 
-        res.json({proverb: rows[0]});
-        
-        
-        
 
+    pool.getConnection(function(err,connection){
+        var query = connection.query('SELECT * from proverb where id= ?', [randomnumber], function (err, rows) {
+            if(err){
+                connection.release();
+                throw err;
+            }
+            console.log(rows);
+            res.json({proverb: rows[0]});
+            connection.release();
+        });
+        console.log(query);
     });
 
-    query.on('end', function() {
-        connection.release();
-    });
 };
 
 
