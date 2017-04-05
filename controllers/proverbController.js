@@ -56,16 +56,20 @@ exports.getList = function (req, res) {
 };
 
 exports.getListToJson = function (req, res) {
-    db.connection.query('SELECT * from proverb order by id desc', function (err, rows) {
-        if (err)
-            throw err;
 
-        var user_id = req.query.user_id;
+    db.pool.getConnection(function(err,connection){
+        var query = connection.query('SELECT * from proverb order by id desc', function (err, rows) {
+            if(err){
+                connection.release();
+                throw err;
+            }
 
-//        res.render('proverb/list', {persons: rows, user_id: user_id});
-
-        res.json({proverb:rows});
+            res.json({proverb:rows});
+            connection.release();
+        });
+        console.log(query);
     });
+
 };
 
 
@@ -81,7 +85,7 @@ exports.getOneToJson = function (req, res) {
     var id = req.query.id;
 
     var minimum = 43;
-    var maximum = 819
+    var maximum = 945;
         ;
 
     var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
@@ -109,28 +113,26 @@ exports.getOneToJsonEnglish = function (req, res) {
     var id = req.query.id;
 
     var minimum = 43;
-    var maximum = 572
+    var maximum = 673
+
         ;
 
     var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
 
-    db.connection.query('SELECT * from english_proverb where id= ?', [randomnumber], function (err, rows) {
-        if (err)
-            throw err;
 
-
-        /*//json repsonse
-         res.json({person: rows[0]});*/
-
-        //res.render('proverb/detailForm', {proverb: rows[0]});
-
-        res.json({proverb: rows[0]});
-
+    db.pool.getConnection(function(err,connection){
+        var query = connection.query('SELECT * from english_proverb where id= ?', [randomnumber], function (err, rows) {
+            if(err){
+                connection.release();
+                throw err;
+            }
+            console.log(rows);
+            res.json({proverb: rows[0]});
+            connection.release();
+        });
+        console.log(query);
     });
 
-    query.on('end', function() {
-        connection.release();
-    });
 };
 
 
