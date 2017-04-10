@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 
 exports.connection = mysql.createConnection({
-    host: 'localhost',
+    host: 'kyungjoon.ipdisk.co.kr',
     user: 'root',
     password: '1114',
     port: 3306,
@@ -10,7 +10,7 @@ exports.connection = mysql.createConnection({
 
 exports.pool = mysql.createPool({
 
-    host: 'localhost',
+    host: 'kyungjoon.ipdisk.co.kr',
     user: 'root',
     password: '1114',
     port: 3306,
