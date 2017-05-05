@@ -21,6 +21,8 @@
             location.href = "/proverb/insertForm";
         });
 
+
+
         //modifyPopup
         $(".modify").on('click', function (e) {
 
@@ -60,7 +62,11 @@
                     function (data, status, xhr) {
                         location.href = './list';
                     });
+        });
 
+        $("#btnLogout2").click(function () {
+            alert("sdflksdflksdf");
+            location.href = '/login/logout';
 
         });
 
@@ -72,14 +78,16 @@
 <!---#################################-->
 <!---목록 리스팅 부분-------------------->
 <!---#################################-->
+
 <div data-role="page" id="list">
     <input type="hidden" id="fb_userid">
     <div class="container">
+        <input type="button" id="btnLogout2" value="logout"/>
         <input type="hidden" id="insertYn">
-        <table id="mytable" border="1" style="width: 400px" class="table ">
+        <table id="mytable" border="1" style="width: 1050px" class="table ">
             <tr>
                 <th style="background-color: #e3e3e3;width: 50px;">id</th>
-                <th style="background-color: #e3e3e3;width: 500px">contents</th>
+                <th style="background-color: #e3e3e3;width: 900px">contents</th>
                 <th style="background-color: #e3e3e3;width: 100px;">name</th>
             </tr>
 
@@ -115,12 +123,7 @@
 
     <div class="container">
 
-        <!-- {{#if result}}
-        <script>
-            alert("insert success");
 
-        </script>
-    {{/if}}-->
 
         <form action="/proverb/update" data-ajax="false" method="post">
             <table border="1" style="width: 400px" class="table">
@@ -164,6 +167,7 @@
             </table>
         </form>
     </div>
+
 
 </div>
 

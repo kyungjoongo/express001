@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 var serveStatic = require( "serve-static" );
+var passport = require('passport');
+var Strategy = require('passport-local').Strategy;
 
 
 
@@ -15,6 +17,8 @@ var serveStatic = require( "serve-static" );
 var index = require('./routes/index');
 var users = require('./routes/users');
 var personRouter = require('./routes/proverbRouter');
+var shoesRouter = require('./routes/shoesRouter');
+
 var loginRouter = require('./routes/loginRouter');
 var mobileRouter = require('./routes/mobileRouter');
 
@@ -39,6 +43,19 @@ app.use(fileUpload());
 app.use('/upload', serveStatic('c:\\upload'));
 
 
+//#####################################################
+// Use application-level middleware for common functionality, including
+// logging, parsing, and session handling.
+app.use(require('morgan')('combined'));
+app.use(require('cookie-parser')());
+app.use(require('body-parser').urlencoded({extended: true}));
+app.use(require('express-session')({secret: 'keyboard cat', resave: false, saveUninitialized: false}));
+
+// Initialize Passport and restore authentication state, if any, from the
+// session.
+app.use(passport.initialize());
+app.use(passport.session());
+
 //#################################################
 //################# route use #####################
 //#################################################
@@ -48,6 +65,11 @@ app.use('/', personRouter);
 //loginRouter
 app.use('/', loginRouter);
 app.use('/', mobileRouter);
+app.use('/', shoesRouter);
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -66,6 +88,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+
 
 
 

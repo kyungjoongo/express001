@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <title>간단한 지도 표시하기</title>
+  <script
+    src="https://code.jquery.com/jquery-2.2.4.js"
+    integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous"></script>
+
+
+  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=fZRvViGHXfpSnDAPx11j&amp;submodules=panorama,geocoder,drawing,visualization"></script>
+</head>
+<body>
+<div id="map" style="width:80%;height:800px;"></div>
+
+
+<script>
+  var map = new naver.maps.Map("map", {
+      center: new naver.maps.LatLng(37.376208137, 127.1143300127),
+      zoom: 11
+    }),
+    infoWindow = null;
+
+  function initGeocoder() {
+    var latlng = map.getCenter();
+    var utmk = naver.maps.TransCoord.fromLatLngToUTMK(latlng);
+    var tm128 = naver.maps.TransCoord.fromUTMKToTM128(utmk);
+    var naverCoord = naver.maps.TransCoord.fromTM128ToNaver(tm128);
+
+    infoWindow = new naver.maps.InfoWindow({
+      content: ''
+    });
+
+    map.addListener('click', function (e) {
+      var latlng = e.coord,
+        utmk = naver.maps.TransCoord.fromLatLngToUTMK(latlng),
+        tm128 = naver.maps.TransCoord.fromUTMKToTM128(utmk),
+        naverCoord = naver.maps.TransCoord.fromTM128ToNaver(tm128);
+
+      utmk.x = parseFloat(utmk.x.toFixed(1));
+      utmk.y = parseFloat(utmk.y.toFixed(1));
+
+      infoWindow.setContent([
+        '<div style="padding:10px;width:300px;font-size:14px;line-height:20px;">',
+        '<strong>위도경도</strong> : ' + latlng + '<br />',
+        '<strong>UTMK</strong> : ' + utmk + '<br />',
+        '<strong>TM128</strong> : ' + tm128 + '<br />',
+        '<strong>NAVER</strong> : ' + naverCoord + '<br />',
+        '</div>'
+      ].join(''));
+
+      infoWindow.open(map, latlng);
+    });
+  }
+
+  naver.maps.onJSContentLoaded = initGeocoder;
+
+</script>
+</body>
+</html>

@@ -1,115 +1,47 @@
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js"
+        charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script>
 
-    function testAPI() {
-        console.log('Welcome!  Fetching your information.... ');
-        FB.api('/me', function (response) {
-            console.log('Successful login for: ' + response.name);
-            document.getElementById('status').innerHTML =
-                    'Thanks for logging in, ' + response.name + '!';
-        });
-    }
+    $(document).ready(function () {
 
-    window.fbAsyncInit = function () {
-        FB.init({
-            appId: '18980271336',
-            cookie: true,  // enable cookies to allow the server to access
-            xfbml: true,  // parse social plugins on this page
-            version: 'v2.8' // use graph api version 2.8
+
+        $('#btnSubmit').on('click', function (e) {
+
+            $("#form1").submit();
+
+            //location.href='/login/loginAction';
+
         });
 
-        FB.getLoginStatus(function (response) {
-            statusChangeCallback(response);
-        });
 
-    };
-
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    });
 
 
-
-    function statusChangeCallback(response) {
-        console.log('statusChangeCallback');
-        console.log(response);
-        if (response.status === 'connected') {
-            location.href= "/person/list";
-/*
-            $("#fb_token").val(response.authResponse.accessToken);
-            $("#fb_id").val(response.authResponse.userID);*/
-            testAPI();
-        } else if (response.status === 'not_authorized') {
-            // The person is logged into Facebook, but not your app.
-
-
-            document.getElementById('status').innerHTML = 'Please log ' +'into this app.';
-
-        } else {
-
-            $("#btnFacebookLogin").val("페이스북3초가입");
-            // The person is not logged into Facebook, so we're not sure if
-            // they are logged into this app or not.
-            document.getElementById('status').innerHTML = 'Please log ' +
-                    'into Facebook.';
-        }
-    }
-
-    function fb_login(){
-        FB.login(function(response) {
-
-            //로긴 성공시에
-            if (response.authResponse) {
-                alert('페이스로긴성공!  당신정보가져오는중^^.... ');
-                //alert(response); // dump complete info
-                access_token = response.authResponse.accessToken; //get access token
-                user_id = response.authResponse.userID; //get FB UID
-
-                var user_email = "";
-
-                FB.api('/me?fields=id,name,email', function(response) {
-                    user_email = response.email; //get user email
-                    // you can store this data into your database
-                });
-
-                var params = "access_token="+ access_token + "&user_id="+ user_id + "&user_email="+ user_email;
-
-                location.href='/login/loginAction?'+ params;
-
-            } else {
-                //user hit cancel button
-                alert('User cancelled login or did not fully authorize.');
-
-            }
-        }, {
-            scope: 'publish_actions,,name,email'
-        });
-    }
 </script>
-<!--네이보 로그인 스크립타-->
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<div class="container">
+
+    <form id="form1" method="post" action="/login/loginAction">
+        <div class="form-group" style="width: 300px">
+            <label for="email">id:</label>
+            <input type="text" class="form-control" id="username" name="username">
+        </div>
+        <div class="form-group" style="width: 300px">
+            <label for="pwd">Password:</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+
+        <button id="btnSubmit" type="button" class="btn btn-default" style="width: 300px">Submit</button>
+    </form>
 
 
-<a href="#" onclick="fb_login();"><img src="/images/fb_login_image.png"/></a>
-<div id="status"></div>
+</div>
+<div class="container">
+    <div class="alert-danger" style="width: 300px;">
+        {{msg}}
+    </div>
+</div>
 
-<!-- 네이버아이디로로그인 버튼 노출 영역 -->
-<div id="naver_id_login"></div>
-
-<!-- //네이버아이디로로그인 버튼 노출 영역 -->
-<script type="text/javascript">
-    var naver_id_login = new naver_id_login("wDac6nwDY13ew7cAf2Hr", "http://localhost:3000/login/naverLoginCallback");
-    var state = naver_id_login.getUniqState();
-    naver_id_login.setButton("green", 3,40);
-    naver_id_login.setDomain("http://localhost:3000");
-    naver_id_login.setState(state);
-    naver_id_login.setPopup();
-    naver_id_login.init_naver_id_login();
-</script>
 
 

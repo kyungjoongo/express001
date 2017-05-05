@@ -8,16 +8,6 @@ logger.level = 'debug';
 
 
 
-
-/**
- * ###############################################
- * #
- * #  board Controller 방가방가워요sldkflsdkflsdklfksdlfk
- * #
- * #
- * ###############################################
- */
-
 /**
  * max value fetch person table
  * @param callback  lkfldsklgkdfslgklsdfkglsdfkg
@@ -50,6 +40,7 @@ exports.getList = function (req, res) {
 
         var user_id = req.query.user_id;
 
+
         res.render('proverb/list', {persons: rows, user_id: user_id});
 
     });
@@ -67,7 +58,8 @@ exports.getListToJson = function (req, res) {
             res.json({proverb:rows});
             connection.release();
         });
-        console.log(query);
+        //console.log(query);
+        console.log("getListtoJson-------------------------------------->");
     });
 
 };

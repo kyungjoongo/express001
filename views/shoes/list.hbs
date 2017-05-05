@@ -1,0 +1,55 @@
+<script src="/javascripts/facebookLogin.js" type="application/javascript"></script>
+<script type="application/javascript">
+
+    $(document).ready(function () {
+
+        $("#goWriteForm").click(function () {
+            location.href = "/proverb/insertForm";
+        });
+		
+		
+
+        //modifyPopup
+        $(".modify").on('click', function (e) {
+
+            var id = $(this).attr("idValue");
+            location.href = "/proverb/detailForm?id=" + id;
+
+        });
+
+
+    });
+
+</script>
+
+<!---#################################-->
+<!---목록 리스팅 부분-------------------->
+<!---#################################-->
+<div data-role="page" id="list">
+    <input type="hidden" id="fb_userid">
+    <div class="container">
+        <input type="hidden" id="insertYn">
+        <table id="mytable" border="1" style="width: 1050px" class="table ">
+            <tr>
+                <th style="background-color: #e3e3e3;width: 50px;">id</th>
+                <th style="background-color: #e3e3e3;width: 900px">contents</th>
+                <th style="background-color: #e3e3e3;width: 100px;">name</th>
+            </tr>
+
+            {{#each persons}}
+                <tr>
+                    <td> {{id}} </td>
+                    <!--<td><a href="/proverb/detailForm?id={{id}}"> {{contents}} </a></td>-->
+                    <td><a class="modify" href="#detailView" idValue="{{id}}"> {{contents}} </a></td>
+                    <td> {{author}} </td>
+                </tr>
+
+            {{/each}}
+        </table>
+
+    </div>
+</div>
+
+
+
+
