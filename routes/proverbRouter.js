@@ -21,9 +21,9 @@ function ensureAuthenticated(req, res, next) {
 }
 
 
-router.get('/proverb/list', ensureAuthenticated, proverbController.getList);
+/*router.get('/proverb/list', ensureAuthenticated, proverbController.getList);*/
 
-
+router.get('/proverb/list',  proverbController.getList);
 router.route('/proverb/getListToJson').get(proverbController.getListToJson);
 router.route('/proverb/insertForm').get(proverbController.insertForm);
 router.route('/proverb/insert').post(proverbController.insert);
